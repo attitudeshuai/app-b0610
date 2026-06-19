@@ -17,10 +17,13 @@ public class PaceCalculatorService {
      */
     public CalculationResponse calculatePaceFromTime(TimeRequest request) {
         DistanceType distanceType = request.getDistanceType();
-        double distance = request.getActualDistance(); // 使用实际距离（自定义或默认）
+        double distance = request.getActualDistance();
         int totalSeconds = request.getTotalSeconds();
         
-        // 计算每公里配速（秒）
+        int h = totalSeconds / 3600;
+        int m = (totalSeconds % 3600) / 60;
+        int s = totalSeconds % 60;
+        
         double pacePerKm = (double) totalSeconds / distance;
         int paceMinutes = (int) (pacePerKm / 60);
         int paceSeconds = (int) (pacePerKm % 60);
@@ -31,15 +34,15 @@ public class PaceCalculatorService {
                 .pace(formatTime(paceMinutes, paceSeconds))
                 .paceMinutes(paceMinutes)
                 .paceSeconds(paceSeconds)
-                .finishTime(formatTime(request.getHours(), request.getMinutes(), request.getSeconds()))
-                .finishHours(request.getHours())
-                .finishMinutes(request.getMinutes())
-                .finishSeconds(request.getSeconds())
+                .finishTime(formatTime(h, m, s))
+                .finishHours(h)
+                .finishMinutes(m)
+                .finishSeconds(s)
                 .totalSeconds(totalSeconds)
                 .description(String.format("按照 %s/公里的配速完成%s，预计用时 %s",
                         formatTime(paceMinutes, paceSeconds),
                         distanceType.getDescription(),
-                        formatTime(request.getHours(), request.getMinutes(), request.getSeconds())))
+                        formatTime(h, m, s)))
                 .build();
     }
     

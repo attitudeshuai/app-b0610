@@ -31,9 +31,8 @@ public class PaceCalculatorController {
     @PostMapping("/calculate-from-time")
     public ResponseEntity<CalculationResponse> calculatePaceFromTime(
             @Valid @RequestBody TimeRequest request) {
-        log.info("计算配速 - 输入时间: {}:{}:{}, 距离类型: {}", 
-                request.getHours(), request.getMinutes(), request.getSeconds(), 
-                request.getDistanceType());
+        log.info("计算配速 - 输入总秒数: {}, 距离类型: {}",
+                request.getTotalSeconds(), request.getDistanceType());
         
         CalculationResponse response = calculatorService.calculatePaceFromTime(request);
         log.info("计算结果 - 配速: {}/公里", response.getPace());

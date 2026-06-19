@@ -20,9 +20,9 @@ public class PaceCalculatorService {
         double distance = request.getActualDistance();
         int totalSeconds = request.getTotalSeconds();
         
-        int h = request.getHours() != null ? request.getHours() : 0;
-        int m = request.getMinutes() != null ? request.getMinutes() : 0;
-        int s = request.getSeconds() != null ? request.getSeconds() : 0;
+        int h = totalSeconds / 3600;
+        int m = (totalSeconds % 3600) / 60;
+        int s = totalSeconds % 60;
         
         double pacePerKm = (double) totalSeconds / distance;
         int paceMinutes = (int) (pacePerKm / 60);

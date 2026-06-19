@@ -129,9 +129,9 @@ const formatTime = (h, m, s) => {
 const handleSubmit = () => {
   emit('calculate', {
     distanceType: form.distanceType,
-    hours: form.hours,
-    minutes: form.minutes,
-    seconds: form.seconds
+    hours: form.hours || 0,
+    minutes: form.minutes || 0,
+    seconds: form.seconds || 0
   })
 }
 </script>

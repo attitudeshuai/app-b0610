@@ -14,7 +14,6 @@ public class TimeRequest {
     /**
      * 小时 (0-23)
      */
-    @NotNull(message = "小时不能为空")
     @Min(value = 0, message = "小时必须大于等于0")
     @Max(value = 23, message = "小时必须小于等于23")
     private Integer hours;
@@ -22,7 +21,6 @@ public class TimeRequest {
     /**
      * 分钟 (0-59)
      */
-    @NotNull(message = "分钟不能为空")
     @Min(value = 0, message = "分钟必须大于等于0")
     @Max(value = 59, message = "分钟必须小于等于59")
     private Integer minutes;
@@ -30,7 +28,6 @@ public class TimeRequest {
     /**
      * 秒 (0-59)
      */
-    @NotNull(message = "秒不能为空")
     @Min(value = 0, message = "秒必须大于等于0")
     @Max(value = 59, message = "秒必须小于等于59")
     private Integer seconds;
@@ -45,7 +42,7 @@ public class TimeRequest {
      * 自定义距离（公里），可选
      * 如果提供，将使用此距离而不是 distanceType 的默认值
      */
-    @Min(value = 5, message = "自定义距离必须大于1公里")
+    @Min(value = 1, message = "自定义距离必须大于1公里")
     @Max(value = 200, message = "自定义距离必须小于200公里")
     private Double customDistance;
     
@@ -53,13 +50,16 @@ public class TimeRequest {
      * 获取实际使用的距离
      */
     public double getActualDistance() {
-        return customDistance != null ? distanceType.getKilometers() : customDistance;
+        return customDistance != null ? customDistance : distanceType.getKilometers();
     }
     
     /**
      * 获取总秒数
      */
     public int getTotalSeconds() {
-        return hours * 3600 + minutes * 60 + seconds;
+        int h = hours != null ? hours : 0;
+        int m = minutes != null ? minutes : 0;
+        int s = seconds != null ? seconds : 0;
+        return h * 3600 + m * 60 + s;
     }
 }

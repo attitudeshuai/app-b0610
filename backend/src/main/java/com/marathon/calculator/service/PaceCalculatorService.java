@@ -20,6 +20,13 @@ public class PaceCalculatorService {
         double distance = request.getActualDistance(); // 使用实际距离（自定义或默认）
         int totalSeconds = request.getTotalSeconds();
         
+        if (totalSeconds <= 0) {
+            throw new IllegalArgumentException("完赛时间必须大于0，请输入有效的时间");
+        }
+        if (distance <= 0) {
+            throw new IllegalArgumentException("距离必须大于0");
+        }
+        
         // 计算每公里配速（秒）
         double pacePerKm = (double) totalSeconds / distance;
         int paceMinutes = (int) (pacePerKm / 60);
@@ -53,6 +60,13 @@ public class PaceCalculatorService {
         DistanceType distanceType = request.getDistanceType();
         double distance = request.getActualDistance(); // 使用实际距离（自定义或默认）
         int paceInSeconds = request.getPaceInSeconds();
+        
+        if (paceInSeconds <= 0) {
+            throw new IllegalArgumentException("配速必须大于0，请输入有效的配速");
+        }
+        if (distance <= 0) {
+            throw new IllegalArgumentException("距离必须大于0");
+        }
         
         // 计算总完赛时间（秒）
         int totalSeconds = (int) (paceInSeconds * distance);

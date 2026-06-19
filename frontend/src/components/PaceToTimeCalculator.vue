@@ -59,7 +59,6 @@
               max="20"
               class="input-field text-center text-lg font-semibold"
               placeholder="5"
-              required
             />
           </div>
           <div>
@@ -71,7 +70,6 @@
               max="59"
               class="input-field text-center text-lg font-semibold"
               placeholder="0"
-              required
             />
           </div>
         </div>

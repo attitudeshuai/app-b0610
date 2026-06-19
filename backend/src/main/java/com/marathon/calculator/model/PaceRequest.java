@@ -14,7 +14,6 @@ public class PaceRequest {
     /**
      * 配速-分钟 (2-20)
      */
-    @NotNull(message = "配速分钟不能为空")
     @Min(value = 2, message = "配速分钟必须大于等于2")
     @Max(value = 20, message = "配速分钟必须小于等于20")
     private Integer paceMinutes;
@@ -22,7 +21,6 @@ public class PaceRequest {
     /**
      * 配速-秒 (0-59)
      */
-    @NotNull(message = "配速秒不能为空")
     @Min(value = 0, message = "配速秒必须大于等于0")
     @Max(value = 59, message = "配速秒必须小于等于59")
     private Integer paceSeconds;
@@ -37,21 +35,35 @@ public class PaceRequest {
      * 自定义距离（公里），可选
      * 如果提供，将使用此距离而不是 distanceType 的默认值
      */
-    @Min(value = 5, message = "自定义距离必须大于1公里")
-    @Max(value = 200, message = "自定义距离必须小于200公里")
+    @Min(value = 1, message = "自定义距离必须大于等于1公里")
+    @Max(value = 200, message = "自定义距离必须小于等于200公里")
     private Double customDistance;
     
     /**
      * 获取实际使用的距离
      */
     public double getActualDistance() {
-        return customDistance != null ? distanceType.getKilometers() : customDistance;
+        return customDistance != null ? customDistance : distanceType.getKilometers();
+    }
+    
+    /**
+     * 获取配速分钟（空值默认为5）
+     */
+    public int getPaceMinutes() {
+        return paceMinutes != null ? paceMinutes : 5;
+    }
+    
+    /**
+     * 获取配速秒（空值默认为0）
+     */
+    public int getPaceSeconds() {
+        return paceSeconds != null ? paceSeconds : 0;
     }
     
     /**
      * 获取每公里配速的总秒数
      */
     public int getPaceInSeconds() {
-        return paceMinutes * 60 + paceSeconds;
+        return getPaceMinutes() * 60 + getPaceSeconds();
     }
 }
